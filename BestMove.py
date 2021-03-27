@@ -71,6 +71,7 @@ class BestMove:
         return valid_moves
 
     def select_best_moves(self):
+        # Um método deve ter apenas um 'return'
         immediate_victories = self.check_for_immediate_threat(self.ally_mark)
         if immediate_victories:
             return immediate_victories
