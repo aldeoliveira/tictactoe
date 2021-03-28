@@ -31,8 +31,8 @@ class OldMain:
         while self.running:
             self.graphics.draw_gamestate(self.screen, self.current_gamestate)
             self.detect_player_inputs()
-            pygame.time.Clock().tick(self.fps)
-            pygame.display.flip()
+            pygame.time.Clock().tick(self.fps)  # Faz o laço rodar um número limitado de vezes por segundo
+            pygame.display.flip()  # Atualiza o display a cada frame
 
     def set_screen(self):
         self.screen = pygame.display.set_mode(size=(self.width, self.height))  # Define largura e altura da tela
@@ -50,7 +50,7 @@ class OldMain:
                 if e.key == pygame.K_SPACE:
                     self.ask_ai()
             elif e.type == pygame.MOUSEBUTTONDOWN:
-                self.left_click()
+                self.detect_left_click()
 
     def start_new_game(self):  # Renova o gamestate para um novo jogo
         self.current_gamestate = GameState.GameState()
@@ -60,7 +60,7 @@ class OldMain:
         chosen_move = best_move.chosen_move
         self.put_a_mark(chosen_move)
 
-    def left_click(self):  # Insere lances com o botão esquerdo do mouse
+    def detect_left_click(self):  # Insere lances com o botão esquerdo do mouse
         location = pygame.mouse.get_pos()
         square_selected = (location[1]//self.sq_size, location[0]//self.sq_size)
         self.put_a_mark(square_selected)

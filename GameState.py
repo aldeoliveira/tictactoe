@@ -9,7 +9,7 @@ class GameState:
             ['-', '-', '-'],
             ['-', '-', '-']
         ]
-        self.x_to_play = 1
+        self.x_to_play = True
         self.game_over = False
 
     def obtain_lines(self):
