@@ -11,28 +11,32 @@ class OldMain:
     Esta classe gerencia os inputs do usuário.
     """
 
-    current_gamestate = None
-    graphic_resources = None
-
     width = Dimensions.WIDTH
     height = Dimensions.HEIGHT
     fps = Dimensions.FPS
     sq_size = Dimensions.SQ_SIZE
 
+    current_gamestate = None
+    graphics = None
+    screen = None
+
     def __init__(self):
         self.running = True
-        self.current_gamestate = GameState.GameState()
-        self.graphic_resources = Graphics.Graphics()
+        self.graphics = Graphics.Graphics()
 
     def main(self):
         pygame.init()
-        screen = pygame.display.set_mode(size=(self.width, self.height))  # Define largura e altura da tela
-        screen.fill(pygame.Color("black"))  # Define a cor de fundo da tela
+        self.set_screen()
+        self.start_new_game()
         while self.running:
+            self.graphics.draw_gamestate(self.screen, self.current_gamestate)
             self.detect_player_inputs()
-            self.graphic_resources.draw_gamestate(screen, self.current_gamestate)  # Faz os desenhos
             pygame.time.Clock().tick(self.fps)  # Faz o laço rodar um número limitado de vezes por segundo
-            pygame.display.flip()  # Atualiza o tabuleiro a cada frame
+            pygame.display.flip()  # Atualiza o display a cada frame
+
+    def set_screen(self):
+        self.screen = pygame.display.set_mode(size=(self.width, self.height))  # Define largura e altura da tela
+        self.screen.fill(pygame.Color("black"))  # Define a cor de fundo da tela
 
     def detect_player_inputs(self):  # Reconhece os inputs do jogador
         for e in pygame.event.get():
@@ -46,7 +50,7 @@ class OldMain:
                 if e.key == pygame.K_SPACE:
                     self.ask_ai()
             elif e.type == pygame.MOUSEBUTTONDOWN:
-                self.left_click()
+                self.detect_left_click()
 
     def start_new_game(self):  # Renova o gamestate para um novo jogo
         self.current_gamestate = GameState.GameState()
@@ -56,17 +60,15 @@ class OldMain:
         chosen_move = best_move.chosen_move
         self.put_a_mark(chosen_move)
 
-    def left_click(self):  # Insere lances com o botão esquerdo do mouse
+    def detect_left_click(self):  # Insere lances com o botão esquerdo do mouse
         location = pygame.mouse.get_pos()
         square_selected = (location[1]//self.sq_size, location[0]//self.sq_size)
         self.put_a_mark(square_selected)
 
     def put_a_mark(self, square_selected):  # Insere um lance no gamestate
-        if not self.current_gamestate.game_over:
-            mark = Mark.Mark(square_selected)
-            if self.current_gamestate.check_if_empty(mark):
-                self.current_gamestate.make_mark(mark)
-            self.current_gamestate.check_for_victory()
+        mark = Mark.Mark(square_selected)
+        self.current_gamestate.make_mark(mark)
+        self.current_gamestate.check_for_victory()
 
 
 old_main = OldMain()
