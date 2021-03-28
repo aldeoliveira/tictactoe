@@ -74,31 +74,32 @@ class BestMove:
 
     def select_best_moves(self):
         # Um método deve ter apenas um 'return'
+        best_move = False
         immediate_victories = self.check_for_immediate_threat(self.ally_mark)
         if immediate_victories:
-            return immediate_victories
+            best_move = immediate_victories
         immediate_threats = self.check_for_immediate_threat(self.enemy_mark)
         if immediate_threats:
-            return immediate_threats
+            best_move = immediate_threats
         create_double_threat = self.check_for_double_threat(self.ally_mark)
         if create_double_threat:
-            return create_double_threat
+            best_move = create_double_threat
         avoid_double_threat = self.check_for_double_threat(self.enemy_mark)
         if avoid_double_threat:
-            return avoid_double_threat
+            best_move = avoid_double_threat
         empty_center = self.check_if_central_square_is_empty()
         if empty_center:
-            return empty_center
+            best_move = empty_center
         opposite_corner = self.check_for_opposite_corner()
         if opposite_corner:
-            return opposite_corner
+            best_move = opposite_corner
         empty_corners = self.check_for_empty_corners()
         if empty_corners:
-            return empty_corners
+            best_move = empty_corners
         empty_sides = self.check_for_empty_sides()
         if empty_sides:
-            return empty_sides
-        return False
+            best_move = empty_sides
+        return best_move
 
     def check_for_immediate_threat(self, player_mark):
         empty_squares_in_a_line = 1
