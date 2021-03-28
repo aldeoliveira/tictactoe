@@ -14,6 +14,8 @@ class BestMove:
     6) Opposite corner
     7) Empty corner
     8) Empty side
+
+    Adição
     """
 
     number_of_rows = number_of_cols = 3
