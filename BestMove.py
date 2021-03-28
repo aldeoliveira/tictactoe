@@ -107,7 +107,7 @@ class BestMove:
     def check_for_double_threat(self, player_mark):
         empty_squares_in_a_line = 2
         possible_double_threat_squares = []
-        # Obter candidatos de todas as fileiras, colunas e diagonais
+
         self.check_lines(player_mark, empty_squares_in_a_line, possible_double_threat_squares)
 
         # Obter número de vezes que cada candidato aparece (valor)
