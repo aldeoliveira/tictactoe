@@ -24,12 +24,13 @@ class GameState:
         return [top_row, mid_row, bottom_row, left_col, mid_col, right_col, top_left_diagonal, top_right_diagonal]
 
     def make_mark(self, mark):
-        player_mark = 'o'
-        if self.x_to_play:
-            player_mark = 'x'
-        self.board[mark.row][mark.col] = player_mark
-        self.mark_log.append(mark)
-        self.x_to_play = not self.x_to_play
+        if not self.game_over and self.check_if_empty(mark):
+            player_mark = 'o'
+            if self.x_to_play:
+                player_mark = 'x'
+            self.board[mark.row][mark.col] = player_mark
+            self.mark_log.append(mark)
+            self.x_to_play = not self.x_to_play
 
     def undo_mark(self):
         if len(self.mark_log):
