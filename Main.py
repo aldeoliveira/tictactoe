@@ -66,7 +66,10 @@ class OldMain:
         self.put_a_mark(square_selected)
 
     def put_a_mark(self, square_selected):  # Insere um lance no gamestate
-        mark = Mark.Mark(square_selected)
+        symbol = 'x'
+        if not self.current_gamestate.x_to_play:
+            symbol = 'o'
+        mark = Mark.Mark(square_selected, symbol)
         self.current_gamestate.make_mark(mark)
         self.current_gamestate.check_for_victory()
 

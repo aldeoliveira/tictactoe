@@ -35,10 +35,7 @@ class BestMove:
 
         self.rows, self.cols, self.diagonals = self.obtain_lines()
 
-        # Verifica quem é o próximo a jogar
         self.ally_mark, self.enemy_mark = self.define_allies_and_enemies(current_gamestate)
-
-        # Criar um vetor de candidatos com todas as casas vazias
 
         best_moves = self.select_best_moves()
         if best_moves:
