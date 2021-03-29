@@ -2,6 +2,9 @@ from tictactoe import Square
 
 
 class Board:
+    """
+    Talvez precise criar a classe Lines.
+    """
     number_of_rows = None
     number_of_columns = None
     number_of_diagonals = 2
