@@ -1,6 +1,9 @@
 from tictactoe import Board
+from tictactoe import Dimensions
+
 
 EMPTY = '-'
+DIMENSION = Dimensions.DIMENSION
 
 
 class GameState:
@@ -11,36 +14,35 @@ class GameState:
     game_over = None
 
     def __init__(self):
-        self.board = Board.Board(3)
+        self.board = Board.Board(DIMENSION)
         self.x_to_play = True
         self.game_over = False
 
     def make_mark(self, mark):
         if not self.game_over and self.check_if_empty(mark):
             player_mark = mark.symbol
-            square_name = self.get_square_name(mark)
+            square_name = self.get_square_name(mark.row, mark.col)
             self.board.squares[square_name].mark = player_mark
             self.mark_log.append(mark)
             self.x_to_play = not self.x_to_play
 
-    def get_square_name(self, mark):
-        row = mark.row
-        col = mark.col
+    def get_square_name(self, row, col):
         square_name = "{}{}".format(row, col)
         return square_name
 
     def undo_mark(self):
         if len(self.mark_log):
             last_mark = self.mark_log.pop()
-            square_name = self.get_square_name(last_mark)
+            square_name = self.get_square_name(last_mark.row, last_mark.col)
             self.board.squares[square_name].mark = EMPTY
             self.x_to_play = not self.x_to_play
             self.game_over = False
 
     def check_if_empty(self, mark):
         is_empty = False
-        square_name = self.get_square_name(mark)
-        if self.board.squares[square_name] == EMPTY:
+        square_name = self.get_square_name(mark.row, mark.col)
+        square = self.board.squares[square_name]
+        if square.mark == EMPTY:
             is_empty = True
         return is_empty
 
