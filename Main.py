@@ -1,7 +1,7 @@
 import pygame
 from tictactoe import GameState
 from tictactoe import Mark
-from tictactoe import BestMove
+from tictactoe import NewelSimonMethod
 from tictactoe import Dimensions
 from tictactoe import Graphics
 
@@ -56,9 +56,10 @@ class OldMain:
         self.current_gamestate = GameState.GameState()
 
     def ask_ai(self):  # Obtem o melhor lance de acordo com a AI
-        best_move = BestMove.BestMove(self.current_gamestate)
-        chosen_move = best_move.chosen_move
-        self.put_a_mark(chosen_move)
+        newel_simon = NewelSimonMethod.NewelSimonMethod(self.current_gamestate)
+        best_square = newel_simon.best_square
+        square_selected = (best_square.row, best_square.col)
+        self.put_a_mark(square_selected)
 
     def locate_left_click(self):  # Insere lances com o botão esquerdo do mouse
         location = pygame.mouse.get_pos()
@@ -71,7 +72,7 @@ class OldMain:
             symbol = 'o'
         mark = Mark.Mark(square_selected, symbol)
         self.current_gamestate.make_mark(mark)
-        self.current_gamestate.check_for_victory()
+        # self.current_gamestate.check_for_victory()
 
 
 old_main = OldMain()

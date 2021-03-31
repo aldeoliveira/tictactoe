@@ -8,10 +8,7 @@ DIMENSION = Dimensions.DIMENSION
 
 class GameState:
 
-    board = None
     mark_log = []
-    x_to_play = None
-    game_over = None
 
     def __init__(self):
         self.board = Board.Board(DIMENSION)
@@ -46,7 +43,8 @@ class GameState:
             is_empty = True
         return is_empty
 
-    def check_for_victory(self):
+    """
+        def check_for_victory(self):
         if len(self.mark_log) < 5:
             return
         lines = self.board.rows + self.board.columns + self.board.diagonals
@@ -60,3 +58,4 @@ class GameState:
             if marks_in_a_line.count(player_mark) == 3:
                 print("VICTORY! " + str(player_mark) + " won")
                 self.game_over = True
+    """
