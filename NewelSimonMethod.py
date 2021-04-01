@@ -1,5 +1,7 @@
 import random
 from tictactoe import LineChecking
+from tictactoe import SquareChecking
+from tictactoe import Reports
 
 EMPTY = '-'
 
@@ -25,50 +27,81 @@ class NewelSimonMethod:
      - Verifica se há um lado vazio. Se sim, deve ocupá-lo.
     """
 
+    helper = Reports.Reports()
+
     def __init__(self, gamestate):
         self.gamestate = gamestate
         self.best_square = self.find_best_square()
 
     def find_best_square(self):
-        best_square = None
         ally_mark, enemy_mark = self.define_allies_and_enemies()
         board = self.gamestate.board
         line_checking = LineChecking.LineChecking(board)
-        immediately_winning_square = line_checking.check_for_immediate_threats(ally_mark)
-        if immediately_winning_square:
-            best_square = self.choose(immediately_winning_square)
-        if not best_square:
-            immediately_losing_square = line_checking.check_for_immediate_threats(enemy_mark)
-            if immediately_losing_square:
-                best_square = self.choose(immediately_losing_square)
+        square_checking = SquareChecking.SquareChecking(board)
         """
-        if not best_square:
-            double_threat_squares = self.check_for_double_threat(ally_mark)
-            if double_threat_squares:
-                best_square = self.choose(double_threat_squares)
-        if not best_square:
-            avoid_double_threat = self.check_for_double_threat(enemy_mark)
-            if avoid_double_threat:
-                best_square = self.choose(avoid_double_threat)
-        if not best_square:
-            empty_center = self.check_if_central_square_is_empty()
-            if empty_center:
-                best_square = empty_center
-        if not best_square:
-            opposite_corner = self.check_for_opposite_corner()
-            if opposite_corner:
-                best_square = self.choose(opposite_corner)
-        if not best_square:
-            empty_corners = self.check_for_empty_corners()
-            if empty_corners:
-                best_square = self.choose(empty_corners)
-        if not best_square:
-            empty_sides = self.check_for_empty_sides()
-            if empty_sides:
-                best_square = self.choose(empty_sides)
+        
         """
-        if not best_square:
-            empty_squares = self.get_all_empty_squares()
+        best_squares = self.check_for_win(ally_mark, line_checking)
+        method = "Win"
+        if not best_squares:
+            best_squares = self.check_for_win(enemy_mark, line_checking)
+            method = "Block"
+        if not best_squares:
+            print("checking forks for ally")
+            best_squares = self.check_for_fork(ally_mark, line_checking)
+            method = "Fork"
+        if not best_squares:
+            print("checking forks for enemy")
+            best_squares = self.check_for_fork(enemy_mark, line_checking)
+            method = "Prevent fork"
+        if not best_squares:
+            best_squares = self.check_for_empty_center(square_checking)
+            method = "Center"
+        if not best_squares:
+            best_squares = self.check_for_opposite_corner(enemy_mark, square_checking)
+            method = "Opposite corner"
+        if not best_squares:
+            best_squares = self.check_for_empty_corner(square_checking)
+            method = "Corner"
+        if not best_squares:
+            best_squares = self.check_for_empty_side(square_checking)
+            method = "Side"
+        if not best_squares:
+            best_squares = self.check_for_any_empty_square(square_checking)
+            method = "Any"
+        self.helper.print_squares(best_squares)
+        print(method)
+        best_square = self.choose(best_squares)
+        return best_square
+
+    def check_for_win(self, player_mark, line_checking):
+        immediately_winning_squares = line_checking.check_for_immediate_threats(player_mark)
+        return immediately_winning_squares
+
+    def check_for_fork(self, player_mark, line_checking):
+        double_threat_squares = line_checking.check_for_double_threats(player_mark)
+        return double_threat_squares
+
+    def check_for_empty_center(self, square_checking):
+        empty_center = square_checking.check_if_central_square_is_empty()
+        return empty_center
+
+    def check_for_opposite_corner(self, player_mark, square_checking):
+        opposite_corner = square_checking.get_opposite_corners(player_mark)
+        return opposite_corner
+
+    def check_for_empty_corner(self, square_checking):
+        empty_corners = square_checking.get_empty_corners()
+        return empty_corners
+
+    def check_for_empty_side(self, square_checking):
+        empty_sides = square_checking.get_empty_sides()
+        return empty_sides
+
+    def check_for_any_empty_square(self, square_checking):
+        empty_squares = square_checking.get_all_empty_squares()
+        best_square = None
+        if empty_squares:
             best_square = self.choose(empty_squares)
         return best_square
 
@@ -83,29 +116,3 @@ class NewelSimonMethod:
             ally_mark = 'x'
             enemy_mark = 'o'
         return ally_mark, enemy_mark
-
-    def get_all_empty_squares(self):
-        empty_squares = []
-        board = self.gamestate.board
-        squares = board.squares
-        for square in squares:
-            if square.mark == '-':
-                empty_squares.append(square)
-        return empty_squares
-
-    """
-    def check_if_central_square_is_empty(self):
-        central_square = [(1, 1)]
-        if self.board[1][1] == EMPTY:
-            return central_square
-        return False
-
-    def check_for_opposite_corner(self):
-        return False
-
-    def check_for_empty_corners(self):
-        return False
-
-    def check_for_empty_sides(self):
-        return False
-    """

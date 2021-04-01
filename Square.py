@@ -1,12 +1,11 @@
-class Square:
-    row = None
-    col = None
-    mark = '-'
-    square_name = None
+EMPTY = '-'
 
+
+class Square:
     def __init__(self, r, c):
         self.row = r
         self.col = c
+        self.mark = EMPTY
         self.square_name = "{}{}".format(r, c)
 
     def __str__(self):

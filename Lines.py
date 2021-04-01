@@ -6,36 +6,42 @@ class Lines:
         self.lines = self.get_lines()
 
     def get_lines(self):
-        lines = []
-        self.group_rows(lines)
-        self.group_columns(lines)
-        self.group_diagonals(lines)
+        rows = self.get_rows()
+        columns = self.get_columns()
+        diagonals = self.get_diagonals()
+        lines = rows + columns + diagonals
         return lines
 
-    def group_rows(self, lines):
+    def get_rows(self):
+        rows = []
         for i in range(self.dimension):
             row = []
             for square in self.squares.values():
                 if square.row == i:
                     row.append(square)
-            lines.append(row)
+            rows.append(row)
+        return rows
 
-    def group_columns(self, lines):
+    def get_columns(self):
+        columns = []
         for j in range(self.dimension):
             column = []
             for square in self.squares.values():
                 if square.col == j:
                     column.append(square)
-            lines.append(column)
+            columns.append(column)
+        return columns
 
-    def group_diagonals(self, lines):
+    def get_diagonals(self):
+        diagonals = []
         first_diagonal = []
         for square in self.squares.values():
             if square.row == square.col:
                 first_diagonal.append(square)
-        lines.append(first_diagonal)
+        diagonals.append(first_diagonal)
         second_diagonal = []
         for square in self.squares.values():
-            if square.row + square.col == self.dimension:
+            if square.row + square.col == self.dimension - 1:
                 second_diagonal.append(square)
-        lines.append(second_diagonal)
+        diagonals.append(second_diagonal)
+        return diagonals

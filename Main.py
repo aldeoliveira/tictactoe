@@ -58,8 +58,9 @@ class OldMain:
     def ask_ai(self):  # Obtem o melhor lance de acordo com a AI
         newel_simon = NewelSimonMethod.NewelSimonMethod(self.current_gamestate)
         best_square = newel_simon.best_square
-        square_selected = (best_square.row, best_square.col)
-        self.put_a_mark(square_selected)
+        if best_square:
+            square_selected = (best_square.row, best_square.col)
+            self.put_a_mark(square_selected)
 
     def locate_left_click(self):  # Insere lances com o botão esquerdo do mouse
         location = pygame.mouse.get_pos()
