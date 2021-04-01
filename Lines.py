@@ -36,6 +36,6 @@ class Lines:
         lines.append(first_diagonal)
         second_diagonal = []
         for square in self.squares.values():
-            if square.row + square.col == self.dimension:
+            if square.row + square.col == self.dimension - 1:
                 second_diagonal.append(square)
         lines.append(second_diagonal)
