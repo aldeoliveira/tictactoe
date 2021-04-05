@@ -1,5 +1,6 @@
 from tictactoe import Board
 from tictactoe import Dimensions
+from tictactoe import Lines
 
 
 EMPTY = '-'
@@ -43,11 +44,12 @@ class GameState:
             is_empty = True
         return is_empty
 
-    """
-        def check_for_victory(self):
-        if len(self.mark_log) < 5:
+    def check_for_result(self):
+        minimum_number_of_squares_for_result = self.board.dimension * 2 - 1
+        if len(self.mark_log) < minimum_number_of_squares_for_result:
             return
-        lines = self.board.rows + self.board.columns + self.board.diagonals
+        lines_class = Lines.Lines(self.board)
+        lines = lines_class.lines
         player_mark = 'x'
         if self.x_to_play:
             player_mark = 'o'
@@ -58,4 +60,7 @@ class GameState:
             if marks_in_a_line.count(player_mark) == 3:
                 print("VICTORY! " + str(player_mark) + " won")
                 self.game_over = True
-    """
+        total_number_of_squares = self.board.dimension ^ 2
+        if len(self.mark_log) == total_number_of_squares and not self.game_over:
+            print("DRAW")
+            self.game_over = True

@@ -30,7 +30,6 @@ class SquareChecking:
     def get_pairs_of_corners(self):
         lines = Lines.Lines(self.board)
         diagonals = lines.get_diagonals()
-        print("diagonals", diagonals)
         corner_squares = []
         central_row = central_col = 1
         for diagonal in diagonals:
