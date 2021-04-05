@@ -26,7 +26,6 @@ class LineChecking:
     def check_for_double_threats(self, player_mark):
         empty_squares_in_a_line = 1
         possible_double_threat_squares = self.check_lines(player_mark, empty_squares_in_a_line)
-<<<<<<< HEAD
         helper.print_squares(possible_double_threat_squares)
 
         double_threat_squares = []
@@ -45,17 +44,7 @@ class LineChecking:
                         double_threat_squares.append(square)
 
             helper.print_squares_with_values(values_of_possible_double_threat_squares)
-=======
-        set_of_possible_double_threat_squares = list(set(possible_double_threat_squares))
-        values_of_possible_double_threat_squares = {}
-        for square in set_of_possible_double_threat_squares:
-            values_of_possible_double_threat_squares[square] = possible_double_threat_squares.count(square)
-        max_value = max(values_of_possible_double_threat_squares.values())
-        double_threat_squares = []
-        for square in values_of_possible_double_threat_squares:
-            if values_of_possible_double_threat_squares[square] == max_value:
-                double_threat_squares.append(square)
->>>>>>> 1e383e17ed4355b33aa20897e1b420281a2809b8
+
         return double_threat_squares
 
     def check_lines(self, player_mark, number_of_marked_squares):
