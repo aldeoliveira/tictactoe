@@ -25,6 +25,9 @@ class NewelSimonMethod:
      - Verifica se há um canto vazio. Se sim, deve ocupá-lo.
     8) Empty side
      - Verifica se há um lado vazio. Se sim, deve ocupá-lo.
+
+     Olar!
+
     """
 
     helper = Reports.Reports()
