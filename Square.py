@@ -9,7 +9,7 @@ class Square:
         self.square_name = "{}{}".format(r, c)
 
     """
-        def __str__(self):
+    def __str__(self):
         return self.square_name
     """
 
