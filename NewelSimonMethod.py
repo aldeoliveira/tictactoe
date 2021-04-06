@@ -31,45 +31,40 @@ class NewelSimonMethod:
 
     def __init__(self, gamestate):
         self.gamestate = gamestate
-        self.best_square = self.find_best_square()
 
-    def find_best_square(self):
+    def get_best_square(self):
         ally_mark, enemy_mark = self.define_allies_and_enemies()
         board = self.gamestate.board
         line_checking = LineChecking.LineChecking(board)
         square_checking = SquareChecking.SquareChecking(board)
-
         best_squares = self.check_for_win(ally_mark, line_checking)
-        method = "Win"
+        method_used = 1
         if not best_squares:
             best_squares = self.check_for_win(enemy_mark, line_checking)
-            method = "Block"
+            method_used = 2
         if not best_squares:
-            print("checking forks for ally")
             best_squares = self.check_for_fork(ally_mark, line_checking)
-            method = "Fork"
+            method_used = 3
         if not best_squares:
-            print("checking forks for enemy")
             best_squares = self.check_for_fork(enemy_mark, line_checking)
-            method = "Prevent fork"
+            method_used = 4
         if not best_squares:
             best_squares = self.check_for_empty_center(square_checking)
-            method = "Center"
+            method_used = 5
         if not best_squares:
             best_squares = self.check_for_opposite_corner(enemy_mark, square_checking)
-            method = "Opposite corner"
+            method_used = 6
         if not best_squares:
             best_squares = self.check_for_empty_corner(square_checking)
-            method = "Corner"
+            method_used = 7
         if not best_squares:
             best_squares = self.check_for_empty_side(square_checking)
-            method = "Side"
+            method_used = 8
         if not best_squares:
             best_squares = self.check_for_any_empty_square(square_checking)
-            method = "Any"
-        self.helper.print_squares(best_squares)
-        print(method)
+            method_used = 9
         best_square = self.choose(best_squares)
+        print(method_used)
         return best_square
 
     def check_for_win(self, player_mark, line_checking):
@@ -104,7 +99,10 @@ class NewelSimonMethod:
         return best_square
 
     def choose(self, equivalent_moves):
-        chosen_move = random.choice(equivalent_moves)
+        if isinstance(equivalent_moves, list):
+            chosen_move = random.choice(equivalent_moves)
+        else:
+            chosen_move = equivalent_moves
         return chosen_move
 
     def define_allies_and_enemies(self):

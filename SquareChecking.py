@@ -30,7 +30,6 @@ class SquareChecking:
     def get_pairs_of_corners(self):
         lines = Lines.Lines(self.board)
         diagonals = lines.get_diagonals()
-        print("diagonals", diagonals)
         corner_squares = []
         central_row = central_col = 1
         for diagonal in diagonals:
@@ -79,3 +78,9 @@ class SquareChecking:
                 empty_sides.append(square)
         return empty_sides
 
+    def check_for_draw(self):
+        draw = False
+        squares_available = self.get_all_empty_squares()
+        if not squares_available:
+            draw = True
+        return draw
