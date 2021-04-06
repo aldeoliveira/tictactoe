@@ -78,3 +78,9 @@ class SquareChecking:
                 empty_sides.append(square)
         return empty_sides
 
+    def check_for_draw(self):
+        draw = False
+        squares_available = self.get_all_empty_squares()
+        if not squares_available:
+            draw = True
+        return draw

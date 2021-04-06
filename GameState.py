@@ -1,6 +1,7 @@
 from tictactoe import Board
 from tictactoe import Dimensions
-from tictactoe import Lines
+from tictactoe import LineChecking
+from tictactoe import SquareChecking
 
 
 EMPTY = '-'
@@ -45,22 +46,12 @@ class GameState:
         return is_empty
 
     def check_for_result(self):
-        minimum_number_of_squares_for_result = self.board.dimension * 2 - 1
-        if len(self.mark_log) < minimum_number_of_squares_for_result:
-            return
-        lines_class = Lines.Lines(self.board)
-        lines = lines_class.lines
-        player_mark = 'x'
-        if self.x_to_play:
-            player_mark = 'o'
-        for line in lines:
-            marks_in_a_line = []
-            for square in line:
-                marks_in_a_line.append(square.mark)
-            if marks_in_a_line.count(player_mark) == 3:
-                print("VICTORY! " + str(player_mark) + " won")
+        line_checking = LineChecking.LineChecking(self.board)
+        square_checking = SquareChecking.SquareChecking(self.board)
+        for mark in ['x', 'o']:
+            if line_checking.check_for_win(mark):
+                print("VICTORY! " + str(mark) + " won")
                 self.game_over = True
-        total_number_of_squares = self.board.dimension ^ 2
-        if len(self.mark_log) == total_number_of_squares and not self.game_over:
+        if not self.game_over and square_checking.check_for_draw():
             print("DRAW")
             self.game_over = True

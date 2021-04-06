@@ -52,3 +52,13 @@ class LineChecking:
                     if square.mark == EMPTY:
                         candidate_squares.append(square)
         return candidate_squares
+
+    def check_for_win(self, player_mark):
+        win = False
+        for line in self.lines:
+            marks_in_the_line = []
+            for square in line:
+                marks_in_the_line.append(square.mark)
+            if marks_in_the_line.count(player_mark) == self.dimension:
+                win = True
+        return win

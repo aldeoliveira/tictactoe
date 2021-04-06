@@ -31,9 +31,8 @@ class NewelSimonMethod:
 
     def __init__(self, gamestate):
         self.gamestate = gamestate
-        self.best_square = self.find_best_square()
 
-    def find_best_square(self):
+    def get_best_square(self):
         ally_mark, enemy_mark = self.define_allies_and_enemies()
         board = self.gamestate.board
         line_checking = LineChecking.LineChecking(board)
@@ -100,7 +99,10 @@ class NewelSimonMethod:
         return best_square
 
     def choose(self, equivalent_moves):
-        chosen_move = random.choice(equivalent_moves)
+        if isinstance(equivalent_moves, list):
+            chosen_move = random.choice(equivalent_moves)
+        else:
+            chosen_move = equivalent_moves
         return chosen_move
 
     def define_allies_and_enemies(self):

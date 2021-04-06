@@ -8,8 +8,10 @@ class Square:
         self.mark = EMPTY
         self.square_name = "{}{}".format(r, c)
 
-    def __str__(self):
+    """
+        def __str__(self):
         return self.square_name
+    """
 
     def put_mark(self, mark):
         self.mark = mark
