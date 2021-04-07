@@ -1,4 +1,7 @@
 
+X_MARK = 'x'
+O_MARK = 'o'
+EMPTY = '-'
 WIDTH = HEIGHT = 512
 LINE_WIDTH = 2
 MARK_WIDTH = 4

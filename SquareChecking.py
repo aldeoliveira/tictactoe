@@ -1,12 +1,9 @@
 from tictactoe import Lines
-from tictactoe import Reports
 
 EMPTY = '-'
 
 
 class SquareChecking:
-
-    helper = Reports.Reports()
 
     def __init__(self, board):
         self.board = board
@@ -52,13 +49,15 @@ class SquareChecking:
         return side_squares
 
     def get_opposite_corners(self, player_mark):
-        corner_squares = self.get_pairs_of_corners()
         opposite_corners = []
-        for pair_of_corners in corner_squares:
-            if pair_of_corners[0] == player_mark and pair_of_corners[1] == EMPTY:
-                opposite_corners.append(pair_of_corners[1])
-            if pair_of_corners[1] == player_mark and pair_of_corners[0] == EMPTY:
-                opposite_corners.append(pair_of_corners[0])
+        pairs_of_corner_squares = self.get_pairs_of_corners()
+        for pair_of_corners in pairs_of_corner_squares:
+            first_square = pair_of_corners[0]
+            second_square = pair_of_corners[1]
+            if first_square.mark == player_mark and second_square.mark == EMPTY:
+                opposite_corners.append(second_square)
+            if first_square.mark == player_mark and second_square.mark == EMPTY:
+                opposite_corners.append(first_square)
         return opposite_corners
 
     def get_empty_corners(self):

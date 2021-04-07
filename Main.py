@@ -5,16 +5,19 @@ from tictactoe import NewelSimonMethod
 from tictactoe import Dimensions
 from tictactoe import Graphics
 
+WIDTH = Dimensions.WIDTH
+HEIGHT = Dimensions.HEIGHT
+FPS = Dimensions.FPS
+SQ_SIZE = Dimensions.SQ_SIZE
+
+X_MARK = Dimensions.X_MARK
+O_MARK = Dimensions.O_MARK
+
 
 class OldMain:
     """
     Esta classe gerencia os inputs do usuário.
     """
-
-    width = Dimensions.WIDTH
-    height = Dimensions.HEIGHT
-    fps = Dimensions.FPS
-    sq_size = Dimensions.SQ_SIZE
 
     current_gamestate = None
     graphics = None
@@ -30,11 +33,11 @@ class OldMain:
         while self.running:
             self.graphics.draw_gamestate(self.screen, self.current_gamestate)
             self.detect_player_inputs()
-            pygame.time.Clock().tick(self.fps)  # Faz o laço rodar um número limitado de vezes por segundo
+            pygame.time.Clock().tick(FPS)  # Faz o laço rodar um número limitado de vezes por segundo
             pygame.display.flip()  # Atualiza o display a cada frame
 
     def set_screen(self):
-        self.screen = pygame.display.set_mode(size=(self.width, self.height))  # Define largura e altura da tela
+        self.screen = pygame.display.set_mode(size=(WIDTH, HEIGHT))  # Define largura e altura da tela
         self.screen.fill(pygame.Color("black"))  # Define a cor de fundo da tela
 
     def detect_player_inputs(self):  # Reconhece os inputs do jogador
@@ -65,7 +68,7 @@ class OldMain:
 
     def locate_left_click(self):  # Insere lances com o botão esquerdo do mouse
         location = pygame.mouse.get_pos()
-        square_selected = (location[1]//self.sq_size, location[0]//self.sq_size)
+        square_selected = (location[1] // SQ_SIZE, location[0] // SQ_SIZE)
         return square_selected
 
     def put_a_mark(self, square_selected):  # Insere um lance no gamestate

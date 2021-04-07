@@ -1,8 +1,6 @@
 from tictactoe import Lines
-from tictactoe import Reports
 
 EMPTY = '-'
-helper = Reports.Reports()
 
 
 class LineChecking:
@@ -23,20 +21,33 @@ class LineChecking:
         squares_with_immediate_threat = self.check_lines(player_mark, marked_squares_in_a_line)
         return squares_with_immediate_threat
 
-    def check_for_double_threats(self, player_mark):
+    def check_for_forking_squares(self, player_mark):
+        possible_forking_squares = self.get_possible_forking_squares(player_mark)
+        double_threat_squares = []
+        if possible_forking_squares:
+            values_of_possible_double_threat_squares = self.evaluate_possible_forking_squares(possible_forking_squares)
+            double_threat_squares = self.get_most_dangerous_forking_squares(values_of_possible_double_threat_squares)
+        return double_threat_squares
+
+    def get_possible_forking_squares(self, player_mark):
         empty_squares_in_a_line = 1
         possible_double_threat_squares = self.check_lines(player_mark, empty_squares_in_a_line)
+        return possible_double_threat_squares
+
+    def evaluate_possible_forking_squares(self, possible_double_threat_squares):
+        set_of_possible_double_threat_squares = list(set(possible_double_threat_squares))
+        values_of_possible_double_threat_squares = {}
+        for square in set_of_possible_double_threat_squares:
+            values_of_possible_double_threat_squares[square] = possible_double_threat_squares.count(square)
+        return values_of_possible_double_threat_squares
+
+    def get_most_dangerous_forking_squares(self, values_of_possible_double_threat_squares):
         double_threat_squares = []
-        if possible_double_threat_squares:
-            set_of_possible_double_threat_squares = list(set(possible_double_threat_squares))
-            values_of_possible_double_threat_squares = {}
-            for square in set_of_possible_double_threat_squares:
-                values_of_possible_double_threat_squares[square] = possible_double_threat_squares.count(square)
-            max_value = max(values_of_possible_double_threat_squares.values())
-            if max_value > 1:
-                for square in values_of_possible_double_threat_squares:
-                    if values_of_possible_double_threat_squares[square] == max_value:
-                        double_threat_squares.append(square)
+        max_value = max(values_of_possible_double_threat_squares.values())
+        if max_value > 1:
+            for square in values_of_possible_double_threat_squares:
+                if values_of_possible_double_threat_squares[square] == max_value:
+                    double_threat_squares.append(square)
         return double_threat_squares
 
     def check_lines(self, player_mark, number_of_marked_squares):
