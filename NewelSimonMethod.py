@@ -2,8 +2,6 @@ import random
 import copy
 from tictactoe import LineChecking
 from tictactoe import SquareChecking
-from tictactoe import Reports
-from tictactoe import GameState
 from tictactoe import Mark
 
 EMPTY = '-'
@@ -29,8 +27,6 @@ class NewelSimonMethod:
     8) Empty side
      - Verifica se há um lado vazio. Se sim, deve ocupá-lo.
     """
-
-    helper = Reports.Reports()
 
     def __init__(self, gamestate):
         self.current_gamestate = gamestate
@@ -79,28 +75,55 @@ class NewelSimonMethod:
         return double_threat_squares
 
     def block_forks(self):
-        best_blocking_squares = []
+        """
+        Este método seleciona uma casa que não só bloqueia um ataque duplo do oponente, mas também impede que o oponente
+        crie um ataque duplo com seu próprio lance. Sua lógica é a seguinte:
+         - Ele localiza todas as casas que geram um ataque duplo para o oponente;
+         - Se houver apenas uma ameaça de ataque duplo, ocupa essa casa;
+         - Se houver mais de uma casa que cria um ataque duplo, deve-se ocupar uma casa que force o oponente a ocupar,
+         no próximo lance, uma casa que não gere um ataque duplo.
+
+        A implementação é a seguinte:
+            Obter as casas que criam ataques duplos para o oponente,
+            Se houver apenas uma ameaça de ataque duplo, ocupar a casa.
+            Se houver mais de uma ameaça de ataque duplo,
+                Obter todos os lances possíveis,
+                Verificar em quais desses lances o oponente é forçado a jogar onde não cria um ataque duplo
+        """
         forking_squares = self.line_checking.check_for_forking_squares(self.enemy_mark)
+        best_blocking_squares = forking_squares
         if len(forking_squares) > 1:
-            candidates = self.check_for_any_empty_square()
-            for square in candidates:
-                analysis_gamestate = copy.deepcopy(self.current_gamestate)
-                r, c = square.row, square.col
-                mark = Mark.Mark((r, c), self.ally_mark)
-                analysis_gamestate.make_mark(mark)
-                analysis_line_checking = LineChecking.LineChecking(analysis_gamestate.board)
-                forking_squares_in_analysis_position = analysis_line_checking.check_for_forking_squares(self.enemy_mark)
-                square_enemy_has_to_block = analysis_line_checking.check_for_immediate_threats(self.ally_mark)
-                same_square = self.check_if_contain_same_squares(forking_squares_in_analysis_position,
-                                                                 square_enemy_has_to_block)
-                if not same_square:
-                    best_blocking_squares.append(same_square)
+            squares_that_prevent_all_forks = self.get_squares_that_prevent_all_forks()
+            if squares_that_prevent_all_forks:
+                best_blocking_squares = squares_that_prevent_all_forks
         return best_blocking_squares
+
+    def get_squares_that_prevent_all_forks(self):
+        squares_that_prevent_both_forks = []
+        candidates = self.check_for_any_empty_square()
+        for square in candidates:
+            analysis_gamestate = self.make_a_mark_in_a_analysis_board(square)
+            analysis_line_checking = LineChecking.LineChecking(analysis_gamestate.board)
+            squares_enemy_has_to_block = analysis_line_checking.check_for_immediate_threats(self.ally_mark)
+            if squares_enemy_has_to_block:
+                forking_squares_in_analysis_position = analysis_line_checking.check_for_forking_squares(self.enemy_mark)
+                same_square = self.check_if_contain_same_squares(forking_squares_in_analysis_position,
+                                                                 squares_enemy_has_to_block)
+                if not same_square:
+                    squares_that_prevent_both_forks.append(square)
+        return squares_that_prevent_both_forks
+
+    def make_a_mark_in_a_analysis_board(self, square):
+        analysis_gamestate = copy.deepcopy(self.current_gamestate)
+        r, c = square.row, square.col
+        mark = Mark.Mark((r, c), self.ally_mark)
+        analysis_gamestate.make_mark(mark)
+        return analysis_gamestate
 
     def check_if_contain_same_squares(self, first_list, second_list):
         same_squares = []
-        for a in second_list:
-            for b in first_list:
+        for a in first_list:
+            for b in second_list:
                 if a.row == b.row and a.col == b.col:
                     same_squares.append(a)
         return same_squares

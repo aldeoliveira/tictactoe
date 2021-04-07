@@ -3,19 +3,20 @@ from tictactoe import Dimensions
 from tictactoe import LineChecking
 from tictactoe import SquareChecking
 
-
 EMPTY = '-'
+X_MARK = 'x'
+O_MARK = 'o'
 DIMENSION = Dimensions.DIMENSION
 
 
 class GameState:
 
-    mark_log = []
-
     def __init__(self):
         self.board = Board.Board(DIMENSION)
+        self.mark_log = []
         self.x_to_play = True
         self.game_over = False
+        self.winner = None
 
     def make_mark(self, mark):
         if not self.game_over and self.check_if_empty(mark):
@@ -48,10 +49,11 @@ class GameState:
     def check_for_result(self):
         line_checking = LineChecking.LineChecking(self.board)
         square_checking = SquareChecking.SquareChecking(self.board)
-        for mark in ['x', 'o']:
-            if line_checking.check_for_win(mark):
-                print("VICTORY! " + str(mark) + " won")
+        for symbol in [X_MARK, O_MARK]:
+            if line_checking.check_for_win(symbol):
+                print("VICTORY! " + str(symbol) + " won")
                 self.game_over = True
+                self.winner = symbol
         if not self.game_over and square_checking.check_for_draw():
             print("DRAW")
             self.game_over = True

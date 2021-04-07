@@ -1,8 +1,6 @@
 from tictactoe import Lines
-from tictactoe import Reports
 
 EMPTY = '-'
-helper = Reports.Reports()
 
 
 class LineChecking:

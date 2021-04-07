@@ -1,12 +1,9 @@
 from tictactoe import Lines
-from tictactoe import Reports
 
 EMPTY = '-'
 
 
 class SquareChecking:
-
-    helper = Reports.Reports()
 
     def __init__(self, board):
         self.board = board
