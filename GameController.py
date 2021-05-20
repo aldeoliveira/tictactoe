@@ -14,7 +14,7 @@ X_MARK = Dimensions.X_MARK
 O_MARK = Dimensions.O_MARK
 
 
-class OldMain:
+class GameController:
     """
     Esta classe gerencia os inputs do usuário.
     """
@@ -77,5 +77,5 @@ class OldMain:
             self.current_gamestate.check_for_result()
 
 
-old_main = OldMain()
+old_main = GameController()
 old_main.main()
