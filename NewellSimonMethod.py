@@ -7,26 +7,7 @@ from tictactoe import Mark
 EMPTY = '-'
 
 
-class NewelSimonMethod:
-    """
-    Algoritmo de Newel e Simon (1972):
-    1) Win
-     - Verifica se há uma casa que concede vitória imediata. Se sim, deve ocupá-la.
-    2) Block win
-     - Verifica se há uma casa que concede vitória imediata ao inimigo. Se sim, deve ocupá-la.
-    3) Fork
-     - Verifica se há uma casa que permite um ataque duplo. Se sim, deve ocupá-la.
-    4) Block fork
-     - Verifica se há uma casa que permite ao oponente fazer um ataque duplo. Se sim, deve ocupá-la.
-    5) Center
-     - Verifica se a casa central está ocupada. Se não, deve ocupá-la.
-    6) Opposite corner
-     - Verifica se há uma marca inimiga num canto, e se o canto oposto está vazio. Se sim, deve ocupar o canto oposto.
-    7) Empty corner
-     - Verifica se há um canto vazio. Se sim, deve ocupá-lo.
-    8) Empty side
-     - Verifica se há um lado vazio. Se sim, deve ocupá-lo.
-    """
+class NewellSimonMethod:
 
     def __init__(self, gamestate):
         self.current_gamestate = gamestate

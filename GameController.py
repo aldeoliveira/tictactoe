@@ -1,7 +1,7 @@
 import pygame
 from tictactoe import GameState
 from tictactoe import Mark
-from tictactoe import NewelSimonMethod
+from tictactoe import NewellSimonMethod
 from tictactoe import Dimensions
 from tictactoe import Graphics
 
@@ -19,26 +19,24 @@ class OldMain:
     Esta classe gerencia os inputs do usuário.
     """
 
-    current_gamestate = None
-    graphics = None
-    screen = None
-    running = None
+    def __init__(self):
+        self.current_gamestate = GameState.GameState()
+        self.running = True
 
     def main(self):
         pygame.init()
-        self.set_screen()
-        self.start_new_game()
-        self.running = True
-        self.graphics = Graphics.Graphics()
+        graphics = Graphics.Graphics()
+        screen = self.create_screen()
         while self.running:
-            self.graphics.draw_gamestate(self.screen, self.current_gamestate)
+            graphics.draw_gamestate(screen, self.current_gamestate)
             self.detect_player_inputs()
             pygame.time.Clock().tick(FPS)  # Faz o laço rodar um número limitado de vezes por segundo
             pygame.display.flip()  # Atualiza o display a cada frame
 
-    def set_screen(self):
-        self.screen = pygame.display.set_mode(size=(WIDTH, HEIGHT))  # Define largura e altura da tela
-        self.screen.fill(pygame.Color("black"))  # Define a cor de fundo da tela
+    def create_screen(self):
+        screen = pygame.display.set_mode(size=(WIDTH, HEIGHT))  # Define largura e altura da tela
+        screen.fill(pygame.Color("black"))  # Define a cor de fundo da tela
+        return screen
 
     def detect_player_inputs(self):  # Reconhece os inputs do jogador
         for e in pygame.event.get():
@@ -48,20 +46,17 @@ class OldMain:
                 if e.key == pygame.K_z:
                     self.current_gamestate.undo_mark()
                 if e.key == pygame.K_r:
-                    self.start_new_game()
+                    self.current_gamestate = GameState.GameState()
                 if e.key == pygame.K_SPACE:
                     self.ask_ai()
             elif e.type == pygame.MOUSEBUTTONDOWN:
                 square_selected = self.locate_left_click()
                 self.put_a_mark(square_selected)
 
-    def start_new_game(self):  # Renova o gamestate para um novo jogo
-        self.current_gamestate = GameState.GameState()
-
     def ask_ai(self):  # Obtem o melhor lance de acordo com a AI
-        newel_simon = NewelSimonMethod.NewelSimonMethod(self.current_gamestate)
+        newell_simon = NewellSimonMethod.NewellSimonMethod(self.current_gamestate)
         if not self.current_gamestate.game_over:
-            best_square = newel_simon.get_best_square()
+            best_square = newell_simon.get_best_square()
             if best_square:
                 square_selected = (best_square.row, best_square.col)
                 self.put_a_mark(square_selected)
