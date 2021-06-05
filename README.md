@@ -8,6 +8,24 @@ A cada turno, o jogador pode colocar sua marca numa das casas vazias do tabuleir
 
 O jogo se desenvolve num balanço estratégico em que ambos jogadores tentam completar uma linha ao mesmo tempo que impede as ameaças do oponente de completar uma dele. Se todas as casas forem preenchidas sem que um jogador complete uma linha, o jogo termina em empate.
 
+
+## Requisitos
+
+1) Ter o Python instalado: https://www.python.org/
+2) Acessando via terminal:
+
+```bash
+# clone este repositório
+$ git clone <https://github.com/aldeoliveira/tictactoe>
+
+# acesse a pasta do projeto
+$ cd tictactoe
+
+# inicialize o projeto
+$ python index.py
+```
+
+
 ## Como jogar
 
 Para jogar nessa versão em Python do tic-tac-toe, utilizam-se comandos do mouse e do teclado:
