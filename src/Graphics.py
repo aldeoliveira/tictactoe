@@ -1,6 +1,5 @@
 import pygame
-from tictactoe import Dimensions
-
+from src import Dimensions
 
 WIDTH = Dimensions.WIDTH
 HEIGHT = Dimensions.HEIGHT
@@ -13,9 +12,6 @@ MARK_WIDTH = Dimensions.MARK_WIDTH
 
 
 class Graphics:
-    """
-    Classe responsável pelos desenhos.
-    """
 
     def draw_gamestate(self, screen, gamestate):  # Atualiza os recursos gráficos
         self.draw_board(screen)
@@ -39,8 +35,7 @@ class Graphics:
     def draw_marks(self, screen, gamestate):  # Localiza onde devem ser colocadas as marcas
         for row in range(DIMENSION):
             for col in range(DIMENSION):
-                square_name = gamestate.get_square_name(row, col)
-                square = gamestate.board.squares[square_name]
+                square = gamestate.board.get_square(row, col)
                 center = (SQ_SIZE * col + SQ_SIZE//2, SQ_SIZE * row + SQ_SIZE//2)
                 if square.mark == 'x':
                     self.draw_an_x(screen, center)

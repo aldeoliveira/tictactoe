@@ -1,9 +1,5 @@
 import pygame
-from tictactoe import GameState
-from tictactoe import Mark
-from tictactoe import NewellSimonMethod
-from tictactoe import Dimensions
-from tictactoe import Graphics
+from src import Graphics, NewellSimonMethod, Dimensions, GameState, Mark
 
 WIDTH = Dimensions.WIDTH
 HEIGHT = Dimensions.HEIGHT
@@ -50,29 +46,29 @@ class GameController:
                 if e.key == pygame.K_SPACE:
                     self.ask_ai()
             elif e.type == pygame.MOUSEBUTTONDOWN:
-                square_selected = self.locate_left_click()
-                self.put_a_mark(square_selected)
+                row, col = self.locate_left_click()
+                self.put_a_mark(row, col)
 
-    def ask_ai(self):  # Obtem o melhor lance de acordo com a AI
+    def ask_ai(self):
         newell_simon = NewellSimonMethod.NewellSimonMethod(self.current_gamestate)
         if not self.current_gamestate.game_over:
             best_square = newell_simon.get_best_square()
             if best_square:
-                square_selected = (best_square.row, best_square.col)
-                self.put_a_mark(square_selected)
+                row, col = (best_square.row, best_square.col)
+                self.put_a_mark(row, col)
 
-    def locate_left_click(self):  # Insere lances com o botão esquerdo do mouse
+    def locate_left_click(self):
         location = pygame.mouse.get_pos()
         square_selected = (location[1] // SQ_SIZE, location[0] // SQ_SIZE)
-        return square_selected
+        row, col = square_selected[0], square_selected[1]
+        return row, col
 
-    def put_a_mark(self, square_selected):  # Insere um lance no gamestate
-        game_over = self.current_gamestate.game_over
-        if not game_over:
+    def put_a_mark(self, row, col):
+        if not self.current_gamestate.game_over:
             symbol = 'x'
             if not self.current_gamestate.x_to_play:
                 symbol = 'o'
-            mark = Mark.Mark(square_selected, symbol)
+            mark = Mark.Mark(row, col, symbol)
             self.current_gamestate.make_mark(mark)
             self.current_gamestate.check_for_result()
 

@@ -1,8 +1,6 @@
 import random
 import copy
-from tictactoe import LineChecking
-from tictactoe import SquareChecking
-from tictactoe import Mark
+from src import LineChecking, SquareChecking, Mark
 
 EMPTY = '-'
 
@@ -98,7 +96,7 @@ class NewellSimonMethod:
         analysis_gamestate = copy.deepcopy(self.current_gamestate)
         r, c = square.row, square.col
         mark = Mark.Mark((r, c), self.ally_mark)
-        analysis_gamestate.make_mark(mark)
+        analysis_gamestate.change_mark_in_a_square(mark)
         return analysis_gamestate
 
     def check_if_contain_same_squares(self, first_list, second_list):
