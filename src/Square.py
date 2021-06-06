@@ -1,4 +1,4 @@
-from tictactoe import Dimensions
+from src import Dimensions
 
 EMPTY = Dimensions.EMPTY
 
@@ -12,6 +12,3 @@ class Square:
 
     def __repr__(self):
         return self.square_name
-
-    def put_mark(self, mark):
-        self.mark = mark

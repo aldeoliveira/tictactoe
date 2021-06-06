@@ -1,4 +1,4 @@
-from tictactoe import Lines
+from src import Lines
 
 EMPTY = '-'
 
