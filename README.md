@@ -113,3 +113,9 @@ Este tic-tac-toe para Python utiliza o algoritmo Newell & Simmon para decidir o 
 	Se ouver um lado vazio,
 	
 	Então jogar no lado vazio.
+
+## Technical Stack
+
+Versão do Python: 3.7.3
+
+Versão do Pygame: 1.9.6
