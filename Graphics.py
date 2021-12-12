@@ -1,5 +1,5 @@
 import pygame
-from src import Dimensions
+import Dimensions
 
 WIDTH = Dimensions.WIDTH
 HEIGHT = Dimensions.HEIGHT

@@ -1,6 +1,6 @@
 import random
 import copy
-from src import LineChecking, SquareChecking, Mark
+import LineChecking, Mark, SquareChecking
 
 EMPTY = '-'
 

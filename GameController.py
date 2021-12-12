@@ -1,5 +1,5 @@
 import pygame
-from src import Graphics, NewellSimonMethod, Dimensions, GameState, Mark
+import GameState, Dimensions, Graphics, Mark, NewellSimonMethod
 
 WIDTH = Dimensions.WIDTH
 HEIGHT = Dimensions.HEIGHT

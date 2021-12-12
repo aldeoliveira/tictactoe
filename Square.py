@@ -1,4 +1,4 @@
-from src import Dimensions
+import Dimensions
 
 EMPTY = Dimensions.EMPTY
 

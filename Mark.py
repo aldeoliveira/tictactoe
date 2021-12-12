@@ -1,4 +1,3 @@
-
 class Mark:
 
     def __init__(self, row, col, symbol):

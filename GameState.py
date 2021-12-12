@@ -1,4 +1,4 @@
-from src import Board, LineChecking, Dimensions, SquareChecking
+import LineChecking, Board, Dimensions, SquareChecking
 
 EMPTY = Dimensions.EMPTY
 X_MARK = Dimensions.X_MARK

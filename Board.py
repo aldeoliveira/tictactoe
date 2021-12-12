@@ -1,4 +1,4 @@
-from src import Square, Dimensions
+import Square, Dimensions
 
 EMPTY = Dimensions.EMPTY
 

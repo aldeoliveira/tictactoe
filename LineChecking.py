@@ -1,4 +1,4 @@
-from src import Lines
+import Lines
 
 EMPTY = '-'
 

@@ -1,4 +1,4 @@
-from src import GameController
+import GameController
 
 
 if __name__ == '__main__':
